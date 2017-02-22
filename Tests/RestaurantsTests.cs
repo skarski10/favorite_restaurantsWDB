@@ -10,7 +10,7 @@ namespace RestaurantsApp
     {
         public RestaurantTest()
         {
-            DBConfiguration.ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=restaurants;Integrated Security=SSPI;";
+            DBConfiguration.ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=restaurant;Integrated Security=SSPI;";
         }
 
         [Fact]
@@ -51,6 +51,33 @@ namespace RestaurantsApp
             //Assert
             Assert.Equal(testList, result);
 
+        }
+
+        [Fact]
+        public void Test_SaveAssignsIdToObject()
+        {
+          Restaurant testRest = new Restaurant("subway");
+          testRest.Save();
+
+          Restaurant savedRest = Restaurant.GetAll()[0];
+
+          int testId = testRest.GetId();
+          int result = savedRest.GetId();
+
+          Assert.Equal(testId, result);
+        }
+        [Fact]
+        public void Test_FindFindsTaskInDatabase()
+        {
+          // Arrange
+          Restaurant  testRestaurant = new Restaurant("Red Lobster");
+          testRestaurant.Save();
+
+          // Act
+          Restaurant foundRestaurant = Restaurant.Find(testRestaurant.GetId());
+
+          // Assert
+          Assert.Equal(testRestaurant, foundRestaurant);
         }
 
         public void Dispose()
