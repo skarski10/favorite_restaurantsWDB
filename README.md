@@ -36,6 +36,10 @@ Program will return true if the cuisine item has been found in the database
 * **Input:** "Mex"
 * **Output:** true
 
+Program will return the restaurants with their respective cuisine
+* **Input:** Cuisine = Mexican, Restaurant = Chipotle
+* **Output:** Mexican: Chipotle
+
 Program will add a cuisine id to each respective restaurant.
 * **Input:** "MamaMia"(id 1)   (if Cuisine: ItalianId = 2)
 * **Output:** MamaMia (cuisineId = 2)

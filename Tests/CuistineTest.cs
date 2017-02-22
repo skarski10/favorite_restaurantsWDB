@@ -53,13 +53,14 @@ namespace RestaurantsApp
             // Act
             Cuisine savedCuisine = Cuisine.GetAll()[0];
 
-            int result = savedCuisine.GetId();
-            int testId = testCuisine.GetId();
+            int result = savedCuisine.GetCuisineId();
+            int testId = testCuisine.GetCuisineId();
 
             // Assert
             Assert.Equal(testId, result);
         }
 
+        [Fact]
         public void Test_FindCuisineId()
         {
             //Arrange
@@ -67,17 +68,35 @@ namespace RestaurantsApp
             testCuisine.Save();
 
             //Act
-            Cuisine foundCuisineId = Cuisine.Find(testCuisine.GetId());
+            Cuisine foundCuisineId = Cuisine.Find(testCuisine.GetCuisineId());
 
             //Assert
             Assert.Equal(testCuisine, foundCuisineId);
         }
 
+        [Fact]
+        public void Test_GetRestaurants_RetrievesAllRestaurantsWithCuisine()
+        {
+            Cuisine testCuisine = new Cuisine("Mexican");
+            testCuisine.Save();
+
+            Restaurant firstRestaurant = new Restaurant("Chipotle", testCuisine.GetCuisineId());
+            firstRestaurant.Save();
+            Restaurant secondRestaurant = new Restaurant("Taco Del Mar", testCuisine.GetCuisineId());
+            secondRestaurant.Save();
+
+
+            List<Restaurant> testRestaurantList = new List<Restaurant> {firstRestaurant, secondRestaurant};
+            List<Restaurant> resultRestaurantList = testCuisine.GetRestaurants();
+
+            Assert.Equal(testRestaurantList, resultRestaurantList);
+        }
 
 
         public void Dispose()
         {
             Cuisine.DeleteAll();
+            Restaurant.DeleteAll();
         }
 
     }

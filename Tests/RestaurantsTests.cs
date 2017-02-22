@@ -26,8 +26,8 @@ namespace RestaurantsApp
         public void Test_EqualOverrideTrueForSameName()
         {
             // Arrange
-            Restaurant firstRestaurant = new Restaurant("Subway");
-            Restaurant secondRestaurant = new Restaurant("Subway");
+            Restaurant firstRestaurant = new Restaurant("Subway", 1);
+            Restaurant secondRestaurant = new Restaurant("Subway", 1);
 
             // Act
             firstRestaurant.Save();
@@ -41,7 +41,7 @@ namespace RestaurantsApp
         public void Test_Save_SaveToDB()
         {
             //Arrange
-            Restaurant testRest = new Restaurant("Subway");
+            Restaurant testRest = new Restaurant("Subway", 1);
             testRest.Save();
 
             //Act
@@ -56,7 +56,7 @@ namespace RestaurantsApp
         [Fact]
         public void Test_SaveAssignsIdToObject()
         {
-          Restaurant testRest = new Restaurant("subway");
+          Restaurant testRest = new Restaurant("subway", 1);
           testRest.Save();
 
           Restaurant savedRest = Restaurant.GetAll()[0];
@@ -70,7 +70,7 @@ namespace RestaurantsApp
         public void Test_FindFindsTaskInDatabase()
         {
           // Arrange
-          Restaurant  testRestaurant = new Restaurant("Red Lobster");
+          Restaurant  testRestaurant = new Restaurant("Red Lobster", 1);
           testRestaurant.Save();
 
           // Act
@@ -83,6 +83,7 @@ namespace RestaurantsApp
         public void Dispose()
         {
             Restaurant.DeleteAll();
+            Cuisine.DeleteAll();
         }
     }
 }
