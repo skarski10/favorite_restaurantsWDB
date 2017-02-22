@@ -6,7 +6,7 @@ using System.Data.SqlClient;
 
 namespace RestaurantsApp
 {
-    public class CuisineTest
+    public class CuisineTest : IDisposable
     {
         [Fact]
         public void Test_DatabaseEmpty()
@@ -15,5 +15,22 @@ namespace RestaurantsApp
 
             Assert.Equal(0, result);
         }
+
+        [Fact]
+        public void Test_ReturnTrueIfEqual()
+        {
+            //Arrange, Act
+            Cuisine firstCuisine = new Cuisine("French");
+            Cuisine secondCuisine = new Cuisine("French");
+
+            //Assert
+            Assert.Equal(firstCuisine, secondCuisine);
+
+        }
+        public void Dispose()
+        {
+            Cuisine.DeleteAll();
+        }
+
     }
 }

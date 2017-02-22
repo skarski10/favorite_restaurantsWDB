@@ -15,6 +15,20 @@ namespace RestaurantsApp
             _type = type;
         }
 
+        public override bool Equals(System.Object otherCuisine)
+        {
+            if (!(otherCuisine is Cuisine))
+            {
+                return false;
+            }
+            else
+            {
+                Cuisine newCuisine = (Cuisine) otherCuisine;
+                bool typeEquality = this.GetType() == newCuisine.GetType();
+                return (typeEquality);
+            }
+        }
+
 
         public static List<Cuisine> GetAll()
         {
@@ -45,6 +59,17 @@ namespace RestaurantsApp
             }
             return cuisineList;
         }
+
+        public static void DeleteAll()
+        {
+            SqlConnection conn = DB.Connection();
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand("DELETE FROM cuisine;", conn);
+            cmd.ExecuteNonQuery();
+            conn.Close();
+        }
+
 
         public int GetId()
         {
