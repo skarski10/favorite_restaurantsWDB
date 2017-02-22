@@ -15,26 +15,24 @@ namespace RestaurantsApp
             _name = name;
         }
 
-
-        public int GetId()
+        public override bool Equals(System.Object otherRestaurant)
         {
-            return _id;
-        }
-
-        public string GetName()
-        {
-            return _name;
-        }
-
-        public void SetName(string newName)
-        {
-            _name = newName;
+            if (!(otherRestaurant is Restaurant))
+            {
+                return false;
+            }
+            else
+            {
+                Restaurant newRestaurant = (Restaurant) otherRestaurant;
+                bool restaurantEquality = this.GetName() == newRestaurant.GetName();
+                return (restaurantEquality);
+            }
         }
 
         public static List<Restaurant> GetAll()
         {
             List<Restaurant> AllRestaurants = new List<Restaurant>{};
-            
+
             SqlConnection conn = DB.Connection();
             conn.Open();
 
@@ -58,6 +56,59 @@ namespace RestaurantsApp
                 conn.Close();
             }
             return AllRestaurants;
+        }
+
+        public void Save()
+        {
+            SqlConnection conn = DB.Connection();
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand("INSERT INTO restaurants (name) OUTPUT INSERTED.id VALUES (@RestaurantName);", conn);
+
+            SqlParameter nameParameter = new SqlParameter();
+            nameParameter.ParameterName = "@RestaurantName";
+            nameParameter.Value = this.GetName();
+            cmd.Parameters.Add(nameParameter);
+
+            SqlDataReader rdr = cmd.ExecuteReader();
+
+            while(rdr.Read())
+            {
+                this._id = rdr.GetInt32(0);
+            }
+            if (rdr != null)
+            {
+                rdr.Close();
+            }
+            if (conn != null)
+            {
+                conn.Close();
+            }
+        }
+
+        public static void DeleteAll()
+        {
+            SqlConnection conn = DB.Connection();
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand("DELETE FROM restaurants;", conn);
+            cmd.ExecuteNonQuery();
+            conn.Close();
+        }
+
+        public int GetId()
+        {
+            return _id;
+        }
+
+        public string GetName()
+        {
+            return _name;
+        }
+
+        public void SetName(string newName)
+        {
+            _name = newName;
         }
     }
 }
