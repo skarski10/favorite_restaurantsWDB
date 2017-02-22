@@ -33,7 +33,7 @@ Program will return true if a cuisine has a unique id and has been saved to an o
 * **Output:** true
 
 Program will return true if the cuisine item has been found in the database
-* **Input:** "Red Lobster"
+* **Input:** "Mex"
 * **Output:** true
 
 Program will add a cuisine id to each respective restaurant.

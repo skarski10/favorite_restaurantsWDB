@@ -88,6 +88,40 @@ namespace RestaurantsApp
             }
         }
 
+        public static Cuisine Find(int id)
+        {
+            SqlConnection conn = DB.Connection();
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand("SELECT * FROM cuisine WHERE id = @CuisineId;", conn);
+
+            SqlParameter cuisineIdParameter = new SqlParameter();
+            cuisineIdParameter.ParameterName = "@CuisineId";
+            cuisineIdParameter.Value = id.ToString();
+            cmd.Parameters.Add(cuisineIdParameter);
+            SqlDataReader rdr = cmd.ExecuteReader();
+
+            int foundCuisineId = 0;
+            string foundCuisineType = null;
+
+            while (rdr.Read())
+            {
+                foundCuisineId = rdr.GetInt32(0);
+                foundCuisineType = rdr.GetString(1);
+            }
+            Cuisine foundCuisine = new Cuisine(foundCuisineType, foundCuisineId);
+
+            if(rdr != null)
+            {
+                rdr.Close();
+            }
+            if(conn != null)
+            {
+                conn.Close();
+            }
+            return foundCuisine;
+        }
+
         public static void DeleteAll()
         {
             SqlConnection conn = DB.Connection();
