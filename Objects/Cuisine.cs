@@ -24,7 +24,7 @@ namespace RestaurantsApp
             else
             {
                 Cuisine newCuisine = (Cuisine) otherCuisine;
-                bool typeEquality = this.GetType() == newCuisine.GetType();
+                bool typeEquality = this.GetCuisineType() == newCuisine.GetCuisineType();
                 return (typeEquality);
             }
         }
@@ -69,7 +69,7 @@ namespace RestaurantsApp
 
             SqlParameter typeParameter = new SqlParameter();
             typeParameter.ParameterName = "@CuisineType";
-            typeParameter.Value = this.GetType();
+            typeParameter.Value = this.GetCuisineType();
             cmd.Parameters.Add(typeParameter);
 
             SqlDataReader rdr = cmd.ExecuteReader();
@@ -171,7 +171,7 @@ namespace RestaurantsApp
             return _id;
         }
 
-        public string GetType()
+        public string GetCuisineType()
         {
             return _type;
         }
