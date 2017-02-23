@@ -92,6 +92,25 @@ namespace RestaurantsApp
             Assert.Equal(testRestaurantList, resultRestaurantList);
         }
 
+        [Fact]
+        public void Test_Update_UpdatesCategoryInDatabase()
+        {
+            // Arrange
+            string type = "Mexico";
+            Cuisine testCuisine = new Cuisine(type);
+            testCuisine.Save();
+            string newType = "Mexican";
+
+            // Act
+            testCuisine.Update(newType);
+
+            string result = testCuisine.GetCuisineType();
+
+            // Assert
+            Assert.Equal(newType, result);
+
+        }
+
 
         public void Dispose()
         {

@@ -8,14 +8,15 @@
 </div>
 
 <div class="row">
-    <div class="col-md-6">
+    <div class="">
         @foreach (var type in Model)
         {
             <h2><a href="/cuisines/@type.GetCuisineId()">@type.GetCuisineType()</a>
             <form class="" action="/edit" method="post">
                 <button class="btn btn-warning" type="submit" name="button">Edit</button>
             </form>
-            <form class="" action="/delete/cuisines/@type.GetCuisineId()" method="post">
+            <form class="" action="/cuisines/@type.GetCuisineId()" method="post">
+                <input type="hidden" name="_method" value="DELETE">
                 <button class="btn btn-danger" type="submit" name="button">Delete</button>
             </form>
 

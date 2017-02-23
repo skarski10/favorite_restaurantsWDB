@@ -155,6 +155,39 @@ namespace RestaurantsApp
             return restaurants;
         }
 
+        public void Update(string newType)
+        {
+            SqlConnection conn = DB.Connection();
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand("UPDATE cuisine SET type = @NewType OUTPUT INSERTED.type WHERE id = @CuisineId;", conn);
+
+            SqlParameter newTypeParameter = new SqlParameter();
+            newTypeParameter.ParameterName = "@NewType";
+            newTypeParameter.Value = newType;
+            cmd.Parameters.Add(newTypeParameter);
+
+            SqlParameter cuisineIdParameter = new SqlParameter();
+            cuisineIdParameter.ParameterName = "@CuisineId";
+            cuisineIdParameter.Value = this.GetCuisineId();
+            cmd.Parameters.Add(cuisineIdParameter);
+            SqlDataReader rdr = cmd.ExecuteReader();
+
+            while(rdr.Read())
+            {
+                this._type = rdr.GetString(0);
+            }
+
+            if (rdr != null)
+            {
+                rdr.Close();
+            }
+            if (conn != null)
+            {
+                conn.Close();
+            }
+        }
+
         public void Delete()
         {
             SqlConnection conn = DB.Connection();

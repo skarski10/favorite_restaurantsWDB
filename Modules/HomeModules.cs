@@ -46,21 +46,33 @@ namespace RestaurantsApp
                 model.Add("cuisine", selectedCuisine);
                 return View["restaurants.cshtml", model];
             };
-            Post["/delete/cuisines/{cuisineId}"] = parameters => {
+            Delete["/cuisines/{cuisineId}"] = parameters => {
                 Cuisine specificCuisine = Cuisine.Find(parameters.cuisineId);
                 specificCuisine.Delete();
                 List<Cuisine> cuisineList = Cuisine.GetAll();
                 return View["cuisines.cshtml", cuisineList];
             };
 
-            // Get["/cuisines/{id}/restaurants"] = parameters => {
-            //     Dictionary<string, object> model = new Dictionary<string, object>();
-            //     Cuisine selectedCuisine = Cuisine.Find(parameters.id);
-            //     List<Restaurant> allRestaurants = selectedCuisine.GetRestaurants();
-            //     model.Add("cuisine", selectedCuisine);
-            //     model.Add("restaurant", allRestaurants);
-            //     return View["restaurant.cshtml", model];
-            // };
+            Get["/cuisine/{id}/restaurant/{restaurantId}"] = parameters => {
+                Dictionary<string, object> model = new Dictionary<string, object>();
+                Cuisine selectedCuisine = Cuisine.Find(parameters.id);
+                Restaurant selectedRestaurant = Restaurant.Find(parameters.restaurantId);
+                List<Restaurant> allRestaurants = selectedCuisine.GetRestaurants();
+                model.Add("cuisine", selectedCuisine);
+                model.Add("restaurant", allRestaurants);
+                // model.Add("restaurantId", selectedRestaurant);
+                return View["restaurants.cshtml", model];
+            };
+
+            Post["/cuisines/{cuisineId}/restaurants/{restaurantId}"] = parameters => {
+                Cuisine selectedCuisine = Cuisine.Find(parameters.cuisineId);
+                Restaurant specificRestaurant = Restaurant.Find(parameters.restaurantId);
+                specificRestaurant.Delete();
+                List<Restaurant> restaurantList = Restaurant.GetAll();
+                return View["restaurants.cshtml", restaurantList];
+            };
+
+
         }
     }
 }
