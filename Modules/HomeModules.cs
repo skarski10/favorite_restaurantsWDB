@@ -27,25 +27,25 @@ namespace RestaurantsApp
                 model.Add("cuisine", selectedCuisine);
                 return View["restaurants.cshtml", model];
             };
-            Get["/cuisines/{id}/restaurants"] = parameters => {
+            Post["/cuisine/{id}/restaurants"] = parameters => {
                 Dictionary<string, object> model = new Dictionary<string, object>();
-                Cuisine selectedCuisine = Cuisine.Find(parameters.id);
-                List<Restaurant> allRestaurants = selectedCuisine.GetRestaurants();
+                Cuisine selectedCuisine = Cuisine.Find(Request.Form["cuisine-id"]);
+                List<Restaurant> cuisineRestaurant = selectedCuisine.GetRestaurants();
+                string restaurantEntered = Request.Form["cuisine-restaurant"];
+                Restaurant newRestaurant = new Restaurant(restaurantEntered, selectedCuisine.GetCuisineId());
+                cuisineRestaurant.Add(newRestaurant);
                 model.Add("cuisine", selectedCuisine);
-                model.Add("restaurant", allRestaurants);
-                return View["restaurant.cshtml", model];
+                model.Add("restaurant", cuisineRestaurant);
+                return View["restaurants.cshtml", model];
             };
 
-            // Post["/cuisine/restaurant"] = _ => {
+            // Get["/cuisines/{id}/restaurants"] = parameters => {
             //     Dictionary<string, object> model = new Dictionary<string, object>();
-            //     Cuisine selectedCuisine = Cuisine.Find(Request.Form["cuisine-id"]);
-            //     List<Restaurant> cuisineRestaurant = selectedCuisine.GetRestaurants();
-            //     string restaurantEntered = Request.Form["cuisine-restaurant"];
-            //     Restaurant newRestaurant = new Restaurant(restaurantEntered, selectedCuisine);
-            //     cuisineRestaurant.Add(newRestaurant);
+            //     Cuisine selectedCuisine = Cuisine.Find(parameters.id);
+            //     List<Restaurant> allRestaurants = selectedCuisine.GetRestaurants();
             //     model.Add("cuisine", selectedCuisine);
-            //     model.Add("restaurant", cuisineRestaurant);
-            //     return View["restaurants.cshtml", model];
+            //     model.Add("restaurant", allRestaurants);
+            //     return View["restaurant.cshtml", model];
             // };
         }
     }
