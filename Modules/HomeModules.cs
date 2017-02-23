@@ -70,20 +70,21 @@ namespace RestaurantsApp
             Get["/cuisine/{id}/restaurant/{restaurantId}"] = parameters => {
                 Dictionary<string, object> model = new Dictionary<string, object>();
                 Cuisine selectedCuisine = Cuisine.Find(parameters.id);
-                Restaurant selectedRestaurant = Restaurant.Find(parameters.restaurantId);
                 List<Restaurant> allRestaurants = selectedCuisine.GetRestaurants();
                 model.Add("cuisine", selectedCuisine);
                 model.Add("restaurant", allRestaurants);
-                model.Add("restaurantId", selectedRestaurant);
                 return View["restaurants.cshtml", model];
             };
             // Delete a restaurant from a cuisine
-            Delete["/cuisines/restaurants/{restaurantId}"] = parameters => {
-                Cuisine selectedCuisine = Cuisine.Find(parameters.cuisineId);
+            Delete["/cuisines/{id}/restaurants/{restaurantId}"] = parameters => {
+                Dictionary<string, object> model = new Dictionary<string, object>();
+                Cuisine selectedCuisine = Cuisine.Find(parameters.id);
                 Restaurant specificRestaurant = Restaurant.Find(parameters.restaurantId);
                 specificRestaurant.Delete();
-                List<Restaurant> restaurantList = Restaurant.GetAll();
-                return View["restaurants.cshtml", restaurantList];
+                List<Restaurant> restaurantList = selectedCuisine.GetRestaurants();
+                model.Add("cuisine", selectedCuisine);
+                model.Add("restaurant", restaurantList);
+                return View["restaurants.cshtml", model];
             };
 
 
