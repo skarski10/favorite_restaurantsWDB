@@ -46,6 +46,24 @@ namespace RestaurantsApp
                 model.Add("cuisine", selectedCuisine);
                 return View["restaurants.cshtml", model];
             };
+
+            Get["/cuisines/{cuisineId}/edit"] = parameters => {
+                Cuisine selectedCuisine = Cuisine.Find(parameters.cuisineId);
+                selectedCuisine.Update(Request.Form["cuisine-type"]);
+                return View["cuisineEdit.cshtml"];
+            };
+
+            Patch["/cuisines/{cuisineId}/updated"] = parameters => {
+                Cuisine selectedCuisine = Cuisine.Find(parameters.cuisineId);
+                selectedCuisine.Update(Request.Form["cuisine-type"]);
+                return View["cuisineUpdated.cshtml"];
+            };
+
+            Get["/cuisines/{cuisineId}/edit"] = parameters => {
+                Cuisine selectedCuisine = Cuisine.Find(parameters.cuisineId);
+                return View["cuisineEdit.cshtml", selectedCuisine];
+            };
+
             Delete["/cuisines/{cuisineId}"] = parameters => {
                 Cuisine specificCuisine = Cuisine.Find(parameters.cuisineId);
                 specificCuisine.Delete();
