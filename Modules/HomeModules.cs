@@ -12,6 +12,13 @@ namespace RestaurantsApp
                 return View["index.cshtml"];
             };
 
+            Get["/cuisines"] = _ => {
+                // var newCuisine = new Cuisine(Request.Form["cuisine-type"]);
+                // newCuisine.Save();
+                var cuisineList = Cuisine.GetAll();
+                return View["cuisines.cshtml", cuisineList];
+            };
+
             Post["/cuisines"] = _ => {
                 var newCuisine = new Cuisine(Request.Form["cuisine-type"]);
                 newCuisine.Save();
@@ -31,12 +38,18 @@ namespace RestaurantsApp
                 Dictionary<string, object> model = new Dictionary<string, object>();
                 Cuisine selectedCuisine = Cuisine.Find(Request.Form["cuisine-id"]);
                 List<Restaurant> cuisineRestaurant = selectedCuisine.GetRestaurants();
-                string restaurantEntered = Request.Form["cuisine-restaurant"];
+                string restaurantEntered = Request.Form["restaurant"];
                 Restaurant newRestaurant = new Restaurant(restaurantEntered, selectedCuisine.GetCuisineId());
+                newRestaurant.Save();
                 cuisineRestaurant.Add(newRestaurant);
-                model.Add("cuisine", selectedCuisine);
                 model.Add("restaurant", cuisineRestaurant);
+                model.Add("cuisine", selectedCuisine);
                 return View["restaurants.cshtml", model];
+            };
+            Post["/cuisines/delete"] = _ => {
+                Cuisine.DeleteAll();
+                Restaurant.DeleteAll();
+                return View["cuisines.cshtml"];
             };
 
             // Get["/cuisines/{id}/restaurants"] = parameters => {

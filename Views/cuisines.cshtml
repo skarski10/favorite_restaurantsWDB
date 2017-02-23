@@ -2,7 +2,33 @@
   Layout = "Shared/_Layout.cshtml";
 }
 
-@foreach (var type in Model)
-{
-    <h2><a href="/cuisines/@type.GetCuisineId()">@type.GetCuisineType()</a></h2>
-}
+
+<div class="row">
+    <h1>Cuisines</h1>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        @foreach (var type in Model)
+        {
+            <h2><a href="/cuisines/@type.GetCuisineId()">@type.GetCuisineType()</a>
+            <form class="" action="/edit" method="post">
+                <button class="btn btn-warning" type="submit" name="button">Edit</button>
+            </form>
+            <form class="" action="/cuisines/delete" method="post">
+                <button class="btn btn-danger" type="submit" name="button">Delete</button>
+            </form>
+
+
+            </h2>
+        }
+    </div>
+@*
+    @foreach (var type in Model)
+    {
+    <div class="col-md-6">
+    <button class="btn btn-warning" type="submit" name="button">Edit</button>
+    <button class="btn btn-danger" type="submit" name="button">Delete</button>
+    </div>
+} *@
+</div>

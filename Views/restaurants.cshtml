@@ -1,12 +1,39 @@
 @{
-  Layout = "Shared/_Layout.cshtml";
+    Layout = "Shared/_Layout.cshtml";
 }
 
-<h2>Add an restaurant:</h2>
+<h1>@Model["cuisine"].GetCuisineType()</h1>
 
-<form action="/cuisine/restaurant" method="post">
-  <input id="cuisine-id" type="hidden" name="cuisine-id" value='@Model["cuisine"].GetCuisineId()'>
-  <label for="restaurant">Restaurant:</label>
-  <input type="text" name="restaurant" id="restaurant" class="form-control">
-  <button type="submit" class="btn">Add</button>
+<h2>Add a restaurant:</h2>
+
+<form action="/cuisine/@Model["cuisine"].GetCuisineId()/restaurants" method="post">
+    <input id="cuisine-id" type="hidden" name="cuisine-id" value='@Model["cuisine"].GetCuisineId()'>
+    <label for="restaurant">Restaurant:</label>
+    <input type="text" name="restaurant" id="restaurant" class="form-control">
+    <button type="submit" class="btn">Add</button>
 </form>
+
+
+<div class="row">
+    <h1>Restaurants</h1>
+</div>
+
+
+<div class="row">
+
+    <div class="col-md-6">
+        <ul>
+            @foreach (var restaurant in @Model["restaurant"])
+            {
+                <h2>@restaurant.GetName()</h2>
+
+            }
+        </ul>
+    </div>
+
+
+    <div class="col-md-6">
+        <button class="btn btn-danger" type="submit" name="button">Delete</button>
+        <button class="btn btn-warning" type="submit" name="button">Edit</button>
+    </div>
+</div>
