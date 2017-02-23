@@ -46,10 +46,11 @@ namespace RestaurantsApp
                 model.Add("cuisine", selectedCuisine);
                 return View["restaurants.cshtml", model];
             };
-            Post["/cuisines/delete"] = _ => {
-                Cuisine.DeleteAll();
-                Restaurant.DeleteAll();
-                return View["cuisines.cshtml"];
+            Post["/delete/cuisines/{cuisineId}"] = parameters => {
+                Cuisine specificCuisine = Cuisine.Find(parameters.cuisineId);
+                specificCuisine.Delete();
+                List<Cuisine> cuisineList = Cuisine.GetAll();
+                return View["cuisines.cshtml", cuisineList];
             };
 
             // Get["/cuisines/{id}/restaurants"] = parameters => {

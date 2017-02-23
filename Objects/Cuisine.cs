@@ -155,6 +155,30 @@ namespace RestaurantsApp
             return restaurants;
         }
 
+        public void Delete()
+        {
+            SqlConnection conn = DB.Connection();
+            conn.Open();
+
+            List<Restaurant> theseRestaurants = this.GetRestaurants();
+            foreach(Restaurant entry in theseRestaurants)
+            {
+                entry.Delete();
+            }
+            SqlCommand cmd = new SqlCommand("DELETE FROM cuisine WHERE id=@CuisineId;", conn);
+
+            SqlParameter idParameter = new SqlParameter();
+            idParameter.ParameterName = "@CuisineId";
+            idParameter.Value = this.GetCuisineId();
+            cmd.Parameters.Add(idParameter);
+            cmd.ExecuteNonQuery();
+
+            if (conn != null)
+            {
+                conn.Close();
+            }
+        }
+
         public static void DeleteAll()
         {
             SqlConnection conn = DB.Connection();
