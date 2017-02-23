@@ -4,5 +4,5 @@
 
 @foreach (var type in Model)
 {
-    <h2>@type.GetCuisineType()</h2>
+    <h2><a href="/cuisines/@type.GetCuisineId()">@type.GetCuisineType()</a></h2>
 }

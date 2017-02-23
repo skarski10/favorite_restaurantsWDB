@@ -1,0 +1,12 @@
+@{
+  Layout = "Shared/_Layout.cshtml";
+}
+
+<h2>Add an restaurant:</h2>
+
+<form action="/cuisine/restaurant" method="post">
+  <input id="cuisine-id" type="hidden" name="cuisine-id" value='@Model.GetCuisineId()'>
+  <label for="restaurant">Restaurant:</label>
+  <input type="text" name="restaurant" id="restaurant" class="form-control">
+  <button type="submit" class="btn">Add</button>
+</form>
