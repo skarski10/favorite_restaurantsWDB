@@ -26,7 +26,8 @@
             @foreach (var restaurant in @Model["restaurant"])
             {
                 <h2>@restaurant.GetName()</h2>
-                <form class="" action="/edit" method="post">
+                <form class="" action="/restaurants/@restaurant.GetId()/edit">
+                    <input type="hidden" name="_method" value="PATCH">
                     <button class="btn btn-warning" type="submit" name="button">Edit</button>
                 </form>
                 <form class="" action="/cuisines/@Model["cuisine"].GetCuisineId()/restaurants/@restaurant.GetId()" method="post">

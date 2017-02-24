@@ -67,6 +67,7 @@ namespace RestaurantsApp
                 model.Add("cuisine", selectedCuisine);
                 return View["restaurants.cshtml", model];
             };
+            //
             Get["/cuisine/{id}/restaurant/{restaurantId}"] = parameters => {
                 Dictionary<string, object> model = new Dictionary<string, object>();
                 Cuisine selectedCuisine = Cuisine.Find(parameters.id);
@@ -75,7 +76,7 @@ namespace RestaurantsApp
                 model.Add("restaurant", allRestaurants);
                 return View["restaurants.cshtml", model];
             };
-            // Delete a restaurant from a cuisine
+            // Delete a restaurant from a restaurant
             Delete["/cuisines/{id}/restaurants/{restaurantId}"] = parameters => {
                 Dictionary<string, object> model = new Dictionary<string, object>();
                 Cuisine selectedCuisine = Cuisine.Find(parameters.id);
@@ -86,8 +87,18 @@ namespace RestaurantsApp
                 model.Add("restaurant", restaurantList);
                 return View["restaurants.cshtml", model];
             };
+            // Take you to the page to edit a restaurant
+            Get["/restaurants/{restaurantId}/edit"] = parameters => {
+                Restaurant selectedRestaurant = Restaurant.Find(parameters.restaurantId);
+                return View["edit_restaurant_form.cshtml", selectedRestaurant];
+            };
 
-
+            // Edit a restaurant
+            Patch["/restaurants/{restaurantId}/updated"] = parameters => {
+                Restaurant selectedRestaurant = Restaurant.Find(parameters.restaurantId);
+                selectedRestaurant.Update(Request.Form["restaurant"]);
+                return View["restaurant_updated.cshtml"];
+            };
         }
     }
 }
