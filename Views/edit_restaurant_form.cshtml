@@ -7,7 +7,7 @@
 <h2>
     <form class="" action="/restaurants/@Model.GetId()/updated" method="post">
         <input type="hidden" name="_method" value="PATCH">
-        <input name="restaurant" type="hidden" value="@Model.GetId()">
+        @* <input name="restaurant" type="hidden" value="@Model.GetId()"> *@
         <label for="restaurant">Update restaurant</label>
         <input id="restaurant" name="restaurant" type="text">
         <button class="btn btn-warning" type="submit" name="button">Submit</button>

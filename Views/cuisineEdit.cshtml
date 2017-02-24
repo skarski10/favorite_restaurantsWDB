@@ -7,7 +7,7 @@
 <h2>
     <form class="" action="/cuisines/@Model.GetCuisineId()/updated" method="post">
         <input type="hidden" name="_method" value="PATCH">
-        <input name="cuisine-type" type="hidden" value="@Model.GetCuisineId()">
+        @* <input name="cuisine-type" type="hidden" value="@Model.GetCuisineId()"> *@
         <label for="cuisine-type">Cuisine Type</label>
         <input id="cuisine-type" name="cuisine-type" type="text">
         <button class="btn btn-warning" type="submit" name="button">Edit</button>

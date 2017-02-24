@@ -14,7 +14,7 @@
             <h2><a href="/cuisines/@type.GetCuisineId()">@type.GetCuisineType()</a>
 
             <form class="" action="/cuisines/@type.GetCuisineId()/edit">
-                <input type="hidden" name="_method" value="PATCH">
+            <input type="hidden" name="_method" value="PATCH">
                 <button class="btn btn-warning" type="submit">Edit</button>
             </form>
 
@@ -27,12 +27,5 @@
     </div>
 
 
-@*
-    @foreach (var type in Model)
-    {
-    <div class="col-md-6">
-    <button class="btn btn-warning" type="submit" name="button">Edit</button>
-    <button class="btn btn-danger" type="submit" name="button">Delete</button>
-    </div>
-} *@
+
 </div>
